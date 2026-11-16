@@ -11,7 +11,7 @@
 ## 快速开始
 
 ```bash
-git clone <本仓库地址> claude-code-hands-on
+git clone https://github.com/Joeegin/claude-code-hands-on.git
 cd claude-code-hands-on
 ./setup.sh                       # 准备练习项目到 ~/benchkit-practice（需要 python3、git）
 ```
