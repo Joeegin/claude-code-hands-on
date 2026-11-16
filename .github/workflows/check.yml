@@ -1,0 +1,24 @@
+name: check
+
+on: [push, pull_request]
+
+jobs:
+  practice-template:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-python@v5
+        with:
+          python-version: "3.12"
+      - run: pip install pytest
+      - name: setup.sh 能正常准备练习项目
+        run: ./setup.sh /tmp/bk
+      - name: 练习项目自带的冒烟测试通过
+        run: cd /tmp/bk && python -m pytest -q
+      - name: 模板里的 Bug 仍然存在（验收应当失败）
+        run: "! python3 grader/check.py /tmp/bk"
+      - name: examples 配置格式正确
+        run: |
+          python3 -c "import json; json.load(open('examples/.claude/settings.json'))"
+          bash -n examples/.claude/hooks/run_tests.sh
+          python3 -m py_compile examples/.claude/hooks/protect_data.py
